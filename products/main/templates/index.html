@@ -27,7 +27,7 @@
                                 <button type="submit" class="btn btn-success mt-5">Search by code</button>
                             </form>
                             <form action="{% url 'main:get_all'%}" method="GET">
-                                <button type="submit" class="btn btn-success mt-5">Get all stockreading</button>
+                                <button type="submit" class="btn btn-success mt-5">Get current stockreading</button>
                             </form>
                             <form action="{% url 'main:get_past'%}" method="GET">
                                 <button type="submit" class="btn btn-warning mt-5">Get past stockreading</button>
@@ -66,7 +66,7 @@
                         {% endfor %}
                         {% elif stockreading_list %}
                         <div class="col-6 mt-5" align="center">
-                        <h2 class='mt-5' >Codes</h2>
+                        <h2 class='mt-5' >Current stockreadings</h2>
                         </div>                        
                         {% for code in stockreading_list %}
                         <div class="col-6 " align="center">                            
