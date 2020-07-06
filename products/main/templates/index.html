@@ -1,0 +1,98 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script>
+
+
+
+{% if sent %}
+<div class="container" align='center'>
+    <div class="row">
+        <div class="col">
+            <div class="col-6 mt-5" align="center">
+                <h1 style='color:green'>{{sent}}...</h1>
+            </div>
+            {% else %}
+            {% endif %}
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="col-6 mt-5" align="center">
+                            <form action="{% url 'main:get_infos'%}" method="GET">
+                                {{form}}
+                                {% csrf_token %}
+                                <br>
+                                <button type="submit" class="btn btn-success mt-5">Search by code</button>
+                            </form>
+                            <form action="{% url 'main:get_all'%}" method="GET">
+                                <button type="submit" class="btn btn-success mt-5">Get all stockreading</button>
+                            </form>
+                            <form action="{% url 'main:get_past'%}" method="GET">
+                                <button type="submit" class="btn btn-warning mt-5">Get past stockreading</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col">
+                        {% if aliments%}
+                        {% for aliment in aliments %}
+                        <div class="col-6 mt-5" align="center">
+                            <form action="/send/" method="POST">
+                                <h4>Product name</h4>
+                                <p>{{aliment.name}}</p>
+                                <h4>Descritpion</h4>
+                                <p>{{aliment.description}}</p>
+                                <h4>Created at</h4>
+                                <p>{{aliment.created_at| date:"d M Y"}}</p>
+                                <h4 style="color:red">Expiration date</h4>
+                                <p>{{aliment.expires_at| date:"d M Y"}}</p>
+                                <h4>Scan history</h4>
+                                {% for infos in actions %}
+                                <div class='scroll' >
+                                <p>{{infos.updated_at| date:"d F Y - f"}}</p>
+                                </div>
+                                {%endfor%}
+                                {% comment %} <button type="submit" class="btn btn-success mt-5">Send a POST
+                                    request</button> {% endcomment %}
+                            </form>
+                        </div>
+                        {% empty%}
+                         <div class="col-6 mt-5" align="center">
+                            <form action="/send/" method="POST">
+                                <h4>No matching found</h4>                              
+                            </form>
+                        </div>
+                        {% endfor %}
+                        {% elif stockreading_list %}
+                        <div class="col-6 mt-5" align="center">
+                        <h2 class='mt-5' >Codes</h2>
+                        </div>                        
+                        {% for code in stockreading_list %}
+                        <div class="col-6 " align="center">                            
+                        <hp>{{code}}</hp>  
+                        </div>
+                        {%endfor%}
+                        {% elif expired_list %}
+                        <div class="col-6 mt-5" align="center">
+                        <h2 class='mt-5' >Expired</h2>
+                        </div>                        
+                        {% for expired in expired_list %}
+                        <div class="col-6 " align="center">                            
+
+                        <p >{{expired.name}} - {{expired.description}}</p>
+                        <p style="color:red">Code {{expired.stockreading}}</p>  
+                        <p >Expiré le {{expired.expires_at}}</p>  
+
+
+                        </div>
+                        {%endfor%}
+                        {% else %}
+                        <div class="col-6 mt-5" align="center">
+                            <form action="/send/" method="POST">
+                                <h4>No matching found</h4>                              
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
