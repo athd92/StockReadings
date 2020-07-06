@@ -1,1 +1,1 @@
-web: python3 main/manage.py runserver
+web: gunicorn products.wsgi
