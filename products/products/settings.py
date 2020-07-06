@@ -25,7 +25,7 @@ SECRET_KEY = 'oj-p@0(e=wrwir$beu1ul#8@kt*9%jz-wibt&6h88p2r550*1b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
