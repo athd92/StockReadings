@@ -1,0 +1,2 @@
+# StockReadings
+Stockreaders app
